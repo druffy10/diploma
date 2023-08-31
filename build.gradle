@@ -26,6 +26,7 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.28'
 }
 
-test {
+tasks.test {
     useJUnitPlatform()
+    systemProperty("selenide.headless", System.getProperty("selenide.headless"))
 }
