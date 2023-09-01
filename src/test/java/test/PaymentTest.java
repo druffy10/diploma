@@ -1,37 +1,81 @@
 package test;
 
 import data.DataHelper;
-import org.junit.jupiter.api.BeforeEach;
+import data.DBHelper;
 import org.junit.jupiter.api.Test;
 import page.MainPage;
 
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
+import static org.junit.Assert.assertEquals;
 
 
 public class PaymentTest {
-    @BeforeEach
-    public void openPage() {
-        String url = System.getProperty("http://localhost:8080");
-        open(url);
-    }
     @Test
     void shouldApproveCard() throws InterruptedException {
-        MainPage mainPage = new MainPage();
+        var mainPage = open("http://localhost:8080", MainPage.class);
         $(byText("Купить")).click();
         mainPage.approvedCard(DataHelper.getValidCardInfo());
-        Thread.sleep(5000);
+        Thread.sleep(10000);
         mainPage.successNotificationVisible();
     }
 
     @Test
     void shouldDeclineCard() throws InterruptedException {
-        MainPage mainPage = new MainPage();
+        var mainPage = open("http://localhost:8080", MainPage.class);
         $(byText("Купить")).click();
         mainPage.declinedCard(DataHelper.getInvalidCardInfo());
         Thread.sleep(5000);
         mainPage.errorNotificationVisible();
     }
 
+    @Test
+    void shouldDeclineRandomCard() throws InterruptedException {
+        var mainPage = open("http://localhost:8080", MainPage.class);
+        $(byText("Купить")).click();
+        mainPage.randomCard(DataHelper.getRandomCardInfo());
+        Thread.sleep(5000);
+        mainPage.errorNotificationVisible();
+    }
+
+    @Test
+    void shouldApproveCardToCredit() throws InterruptedException {
+        var mainPage = open("http://localhost:8080", MainPage.class);
+        $(byText("Купить в кредит")).click();
+        mainPage.approvedCard(DataHelper.getValidCardInfo());
+        Thread.sleep(5000);
+        mainPage.successNotificationVisible();
+    }
+
+    @Test
+    void shouldDeclineCardToCredit() throws InterruptedException {
+        var mainPage = open("http://localhost:8080", MainPage.class);
+        $(byText("Купить в кредит")).click();
+        mainPage.declinedCard(DataHelper.getInvalidCardInfo());
+        Thread.sleep(5000);
+        mainPage.errorNotificationVisible();
+    }
+
+    @Test
+    void shouldDeclineRandomCardToCredit() throws InterruptedException {
+        var mainPage = open("http://localhost:8080", MainPage.class);
+        $(byText("Купить в кредит")).click();
+        mainPage.randomCard(DataHelper.getRandomCardInfo());
+        Thread.sleep(5000);
+        mainPage.errorNotificationVisible();
+    }
+
+    @Test
+    void testGetPaymentAmountFromMySQL() {
+        int expectedAmount = 45000;
+        int amount = Integer.parseInt(DBHelper.getPaymentAmount().getAmount());
+        assertEquals(expectedAmount, amount);
+    }
+    @Test
+    void testGetPaymentAmountFromPostgre() {
+        int expectedAmount = 45000; // Установите ожидаемую сумму здесь
+        int amount = Integer.parseInt(DBHelper.getPaymentAmountForPostgre().getAmount());
+        assertEquals(expectedAmount, amount);
+    }
 }

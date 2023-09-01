@@ -15,16 +15,19 @@ public class DataHelper {
     private static String generateCardNumber() {
         return faker.finance().creditCard();
     }
+
     private static String generateMonth() {
-        return String.format("%02d", faker.random().nextInt(1, 13));
+        return String.format("%02d", faker.random().nextInt(1, 12));
     }
 
     private static String generateYear() {
-        return String.format("%02d", faker.random().nextInt(22, 31));
+        return String.format("%02d", faker.random().nextInt(24, 28));
     }
 
     private static String generateCardOwner() {
-        return faker.name().fullName().toUpperCase();
+        String firstName = faker.name().firstName().toUpperCase();
+        String lastName = faker.name().lastName().toUpperCase();
+        return firstName + " " + lastName;
     }
 
     private static String generateCvc() {
@@ -39,12 +42,17 @@ public class DataHelper {
         String cardOwner;
         String cvc;
     }
+
     public static CardInfo getValidCardInfo() {
         return new CardInfo("4444 4444 4444 4441", generateMonth(), generateYear(), generateCardOwner(), generateCvc());
     }
 
     public static CardInfo getInvalidCardInfo() {
         return new CardInfo("4444 4444 4444 4442", generateMonth(), generateYear(), generateCardOwner(), generateCvc());
+    }
+
+    public static CardInfo getRandomCardInfo() {
+        return new CardInfo(generateCardNumber(), generateMonth(), generateYear(), generateCardOwner(), generateCvc());
     }
 }
 

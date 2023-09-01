@@ -1,6 +1,6 @@
 version: '3'
 services:
-  db:
+  mysql:
     image: mysql:8
     restart: always
     ports:
@@ -17,3 +17,14 @@ services:
     build: ./gate-simulator
     ports:
       - '9999:9999'
+  postgres:
+    image: postgres:13
+    restart: always
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=app
+      - POSTGRES_USER=app
+      - POSTGRES_PASSWORD=pass
