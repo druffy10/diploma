@@ -1,7 +1,11 @@
 package test;
 
+import com.codeborne.selenide.logevents.SelenideLogger;
 import data.DataHelper;
 import data.DBHelper;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import page.MainPage;
 
@@ -12,6 +16,16 @@ import static org.junit.Assert.assertEquals;
 
 
 public class PaymentTest {
+
+    @BeforeAll
+    static void setUpAll() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
+
+    @AfterAll
+    static void tearDownAll() {
+        SelenideLogger.removeListener("allure");
+    }
     @Test
     void shouldApproveCard() throws InterruptedException {
         var mainPage = open("http://localhost:8080", MainPage.class);

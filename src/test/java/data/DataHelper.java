@@ -13,7 +13,7 @@ public class DataHelper {
     }
 
     private static String generateCardNumber() {
-        return faker.finance().creditCard();
+        return faker.numerify("################");
     }
 
     private static String generateMonth() {
