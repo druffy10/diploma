@@ -67,15 +67,10 @@ public class PaymentTest {
     }
 
     @Test
-    void testGetPaymentAmountFromMySQL() {
-        int expectedAmount = 45000;
-        int amount = Integer.parseInt(DBHelper.getPaymentAmount().getAmount());
-        assertEquals(expectedAmount, amount);
-    }
-    @Test
     void testGetPaymentAmountFromPostgre() {
         int expectedAmount = 45000; // Установите ожидаемую сумму здесь
         int amount = Integer.parseInt(DBHelper.getPaymentAmountForPostgre().getAmount());
         assertEquals(expectedAmount, amount);
     }
+
 }
