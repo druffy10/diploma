@@ -73,7 +73,6 @@ public class PaymentTest {
         assertEquals(expectedAmount, amount);
     }
 
-
     @Test
     void shouldMatchCardStatusApprove() throws InterruptedException {
         var mainPage = open("http://localhost:8080", MainPage.class);
