@@ -33,4 +33,12 @@ public class DBHelper {
         var amount = runner.query(conn, amountQuery, new ScalarHandler<>(), lastPaymentId.getId());
         return new MainPage.PurchaseAmount(amount.toString());
     }
+    @SneakyThrows
+    public static MainPage.CardStatus getCardStat() {
+        var amountQuery = "SELECT status FROM payment_entity WHERE id = ?";
+        var conn = getPostgreSQLConn();
+        var lastPaymentId = getLastPaymentIdForPostgre();
+        var status = runner.query(conn, amountQuery, new ScalarHandler<>(), lastPaymentId.getId());
+        return new MainPage.CardStatus((String) status);
+    }
 }

@@ -95,5 +95,16 @@ public class MainPage {
             return id;
         }
         }
+    public static class CardStatus {
+        private final String status;
+
+        public CardStatus(String status) {
+            this.status = status;
+        }
+        public String getStatus() {
+            return status;
+        }
     }
+    }
+
 
