@@ -72,10 +72,36 @@ public class PaymentTest {
         int amount = Integer.parseInt(DBHelper.getPaymentAmount().getAmount());
         assertEquals(expectedAmount, amount);
     }
+
+
     @Test
-    void testGetPaymentAmountFromPostgre() {
-        int expectedAmount = 45000; // Установите ожидаемую сумму здесь
-        int amount = Integer.parseInt(DBHelper.getPaymentAmountForPostgre().getAmount());
-        assertEquals(expectedAmount, amount);
+    void shouldMatchCardStatusApprove() throws InterruptedException {
+        var mainPage = open("http://localhost:8080", MainPage.class);
+        $(byText("Купить")).click();
+        mainPage.approvedCard(DataHelper.getValidCardInfo());
+        Thread.sleep(5000);
+        String expectedStatus = "APPROVED";
+        String status = DBHelper.getCardStat().getStatus();
+        assertEquals(expectedStatus, status);
+    }
+    @Test
+    void shouldMatchCardStatusDecline() throws InterruptedException{
+        var mainPage = open("http://localhost:8080", MainPage.class);
+        $(byText("Купить")).click();
+        mainPage.declinedCard(DataHelper.getInvalidCardInfo());
+        Thread.sleep(5000);
+        String expectedStatus = "DECLINED";
+        String status = DBHelper.getCardStat().getStatus();
+        assertEquals(expectedStatus, status);
+    }
+    @Test
+    void shouldMatchRandomCardStatusDecline() throws InterruptedException{
+        var mainPage = open("http://localhost:8080", MainPage.class);
+        $(byText("Купить")).click();
+        mainPage.randomCard(DataHelper.getRandomCardInfo());
+        Thread.sleep(5000);
+        String expectedStatus = "DECLINED";
+        String status = DBHelper.getCardStat().getStatus();
+        assertEquals(expectedStatus, status);
     }
 }
