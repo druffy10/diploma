@@ -16,7 +16,6 @@ import static org.junit.Assert.assertEquals;
 
 
 public class PaymentTest {
-
     @BeforeAll
     static void setUpAll() {
         SelenideLogger.addListener("allure", new AllureSelenide());
@@ -26,6 +25,7 @@ public class PaymentTest {
     static void tearDownAll() {
         SelenideLogger.removeListener("allure");
     }
+
     @Test
     void shouldApproveCard() throws InterruptedException {
         var mainPage = open("http://localhost:8080", MainPage.class);
@@ -40,7 +40,7 @@ public class PaymentTest {
         var mainPage = open("http://localhost:8080", MainPage.class);
         $(byText("Купить")).click();
         mainPage.declinedCard(DataHelper.getInvalidCardInfo());
-        Thread.sleep(5000);
+        Thread.sleep(10000);
         mainPage.errorNotificationVisible();
     }
 
@@ -49,7 +49,7 @@ public class PaymentTest {
         var mainPage = open("http://localhost:8080", MainPage.class);
         $(byText("Купить")).click();
         mainPage.randomCard(DataHelper.getRandomCardInfo());
-        Thread.sleep(5000);
+        Thread.sleep(10000);
         mainPage.errorNotificationVisible();
     }
 
@@ -58,7 +58,7 @@ public class PaymentTest {
         var mainPage = open("http://localhost:8080", MainPage.class);
         $(byText("Купить в кредит")).click();
         mainPage.approvedCard(DataHelper.getValidCardInfo());
-        Thread.sleep(5000);
+        Thread.sleep(10000);
         mainPage.successNotificationVisible();
     }
 
@@ -67,7 +67,7 @@ public class PaymentTest {
         var mainPage = open("http://localhost:8080", MainPage.class);
         $(byText("Купить в кредит")).click();
         mainPage.declinedCard(DataHelper.getInvalidCardInfo());
-        Thread.sleep(5000);
+        Thread.sleep(10000);
         mainPage.errorNotificationVisible();
     }
 
@@ -76,7 +76,7 @@ public class PaymentTest {
         var mainPage = open("http://localhost:8080", MainPage.class);
         $(byText("Купить в кредит")).click();
         mainPage.randomCard(DataHelper.getRandomCardInfo());
-        Thread.sleep(5000);
+        Thread.sleep(10000);
         mainPage.errorNotificationVisible();
     }
 
@@ -92,27 +92,29 @@ public class PaymentTest {
         var mainPage = open("http://localhost:8080", MainPage.class);
         $(byText("Купить")).click();
         mainPage.approvedCard(DataHelper.getValidCardInfo());
-        Thread.sleep(5000);
+        Thread.sleep(10000);
         String expectedStatus = "APPROVED";
         String status = DBHelper.getCardStat().getStatus();
         assertEquals(expectedStatus, status);
     }
+
     @Test
-    void shouldMatchCardStatusDecline() throws InterruptedException{
+    void shouldMatchCardStatusDecline() throws InterruptedException {
         var mainPage = open("http://localhost:8080", MainPage.class);
         $(byText("Купить")).click();
         mainPage.declinedCard(DataHelper.getInvalidCardInfo());
-        Thread.sleep(5000);
+        Thread.sleep(10000);
         String expectedStatus = "DECLINED";
         String status = DBHelper.getCardStat().getStatus();
         assertEquals(expectedStatus, status);
     }
+
     @Test
-    void shouldMatchRandomCardStatusDecline() throws InterruptedException{
+    void shouldMatchRandomCardStatusDecline() throws InterruptedException {
         var mainPage = open("http://localhost:8080", MainPage.class);
         $(byText("Купить")).click();
         mainPage.randomCard(DataHelper.getRandomCardInfo());
-        Thread.sleep(5000);
+        Thread.sleep(10000);
         String expectedStatus = "DECLINED";
         String status = DBHelper.getCardStat().getStatus();
         assertEquals(expectedStatus, status);
