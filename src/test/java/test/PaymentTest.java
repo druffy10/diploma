@@ -50,7 +50,7 @@ public class PaymentTest extends MethodOrderer.OrderAnnotation {
         Thread.sleep(12000);
         mainPage.errorNotificationVisible();
     }
-    @Order(3)
+    @Order(4)
     @Test
     void shouldApproveCardToCredit() throws InterruptedException {
         var mainPage = open("http://localhost:8080", MainPage.class);
@@ -59,7 +59,7 @@ public class PaymentTest extends MethodOrderer.OrderAnnotation {
         Thread.sleep(20000);
         mainPage.successNotificationVisible();
     }
-    @Order(4)
+    @Order(5)
     @Test
     void shouldDeclineCardToCredit() throws InterruptedException {
         var mainPage = open("http://localhost:8080", MainPage.class);
@@ -68,7 +68,7 @@ public class PaymentTest extends MethodOrderer.OrderAnnotation {
         Thread.sleep(12000);
         mainPage.errorNotificationVisible();
     }
-    @Order(5)
+    @Order(6)
     @Test
     void shouldDeclineRandomCardToCredit() throws InterruptedException {
         var mainPage = open("http://localhost:8080", MainPage.class);
@@ -77,14 +77,14 @@ public class PaymentTest extends MethodOrderer.OrderAnnotation {
         Thread.sleep(12000);
         mainPage.errorNotificationVisible();
     }
-    @Order(6)
+    @Order(7)
     @Test
     void testGetPaymentAmountFromMySQL() {
         int expectedAmount = 45000;
         int amount = Integer.parseInt(DBHelper.getPaymentAmount().getAmount());
         assertEquals(expectedAmount, amount);
     }
-    @Order(7)
+    @Order(8)
     @Test
     void shouldMatchCardStatusApprove() throws InterruptedException {
         var mainPage = open("http://localhost:8080", MainPage.class);
@@ -95,7 +95,7 @@ public class PaymentTest extends MethodOrderer.OrderAnnotation {
         String status = DBHelper.getCardStat().getStatus();
         assertEquals(expectedStatus, status);
     }
-    @Order(8)
+    @Order(9)
     @Test
     void shouldMatchCardStatusDecline() throws InterruptedException {
         var mainPage = open("http://localhost:8080", MainPage.class);
@@ -106,7 +106,7 @@ public class PaymentTest extends MethodOrderer.OrderAnnotation {
         String status = DBHelper.getCardStat().getStatus();
         assertEquals(expectedStatus, status);
     }
-    @Order(9)
+    @Order(10)
     @Test
     void shouldMatchRandomCardStatusDecline() throws InterruptedException {
         var mainPage = open("http://localhost:8080", MainPage.class);
