@@ -3,6 +3,12 @@ plugins {
     id 'io.qameta.allure' version '2.11.2'
 }
 
+ext {
+    dbUrl = "jdbc:postgresql://localhost:5432/app"
+    dbUsername = "app"
+    dbPassword = "pass"
+}
+
 sourceCompatibility = 11
 
 compileJava.options.encoding = "UTF-8"
@@ -21,7 +27,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
     testImplementation 'com.codeborne:selenide:6.17.1'
     testImplementation 'mysql:mysql-connector-java:8.0.22'
-    testImplementation 'org.postgresql:postgresql:42.1.4'
+    testImplementation 'org.postgresql:postgresql:42.6.0'
     testImplementation 'com.github.javafaker:javafaker:1.0.2'
     testImplementation 'commons-dbutils:commons-dbutils:1.7'
     testImplementation 'junit:junit:4.13.2'
@@ -33,4 +39,7 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
     systemProperty("selenide.headless", System.getProperty("selenide.headless"))
+    systemProperty "dbUrl", dbUrl
+    systemProperty "dbUsername", dbUsername
+    systemProperty "dbPassword", dbPassword
 }
