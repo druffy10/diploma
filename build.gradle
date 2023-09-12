@@ -3,6 +3,12 @@ plugins {
     id 'io.qameta.allure' version '2.11.2'
 }
 
+ext {
+    dbUrl = "jdbc:mysql://localhost:3306/app"
+    dbUsername = "app"
+    dbPassword = "pass"
+}
+
 sourceCompatibility = 11
 
 compileJava.options.encoding = "UTF-8"
@@ -32,4 +38,7 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
     systemProperty("selenide.headless", System.getProperty("selenide.headless"))
+    systemProperty "dbUrl", dbUrl
+    systemProperty "dbUsername", dbUsername
+    systemProperty "dbPassword", dbPassword
 }
